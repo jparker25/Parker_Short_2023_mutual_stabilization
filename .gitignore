@@ -1,3 +1,16 @@
+# User specified
+.DS_Store
+__pycache__/*
+env/*
+tmp/*
+tmp_python.py
+
+paper_data/hr_system/*txt
+paper_data/bins_1600_rN_16/cupolets/*
+
+paper_figures/*
+test.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
