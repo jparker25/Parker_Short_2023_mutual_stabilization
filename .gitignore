@@ -7,6 +7,7 @@ tmp_python.py
 
 paper_data/hr_system/*txt
 paper_data/bins_1600_rN_16/cupolets/*
+paper_data/*
 
 paper_figures/*
 test.py
