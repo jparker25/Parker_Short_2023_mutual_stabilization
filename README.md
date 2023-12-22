@@ -39,14 +39,14 @@ All other files are for generation of the figures or analysis of the simulations
 
 <details> 
 <summary>Figure Generation</summary><blockquote>
-This section states how to recreate each of the figures in the manuscript. Figure 1, Figure 2, and Figure 3 are all reprouced from the 2022 publication listed above. However, Figure 3 can be reprodcued in this repository. 
+This section states how to recreate each of the figures in the manuscript. Figure 1, Figure 2, and Figure 3 are all reprouced from the 2022 publication listed above. 
 
-Figures are generated with the `generate_graphics.py` script called from the command line using the flag `-f` followed by a list of desired figures (3,4,5.., etc).
+Figures are generated with the `generate_graphics.py` script called from the command line using the flag `-f` followed by a list of desired figures (4,5.., etc).
 
-For example, to generate figures 4, 6, and 7 run the following one the command line:
+For example, to generate all the figures run the following on the command line:
 
 ```
-$ python generate_graphics.py -f 4 6 7
+$ python generate_graphics.py -f 4 5 6 7
 ```
 
 </blockquote>
