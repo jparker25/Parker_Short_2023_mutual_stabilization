@@ -3,7 +3,7 @@ Repository for the paper titled <i>Mutual Stabilization in Chaotic Hindmarsh–R
 
 Please cite this work appropriately if used as a reference.
 
-The results in this work and the code provided here are an extension of a previous publication from the authors. As such, the details regarding the previous work can be found at the reference listed below:
+The results in this work and the code provided here are an extension of a previous publication from the same authors. As such, the details regarding the previous work can be found at the reference listed below:
 - John E. Parker and Kevin M. Short, “Cupolets in a chaotic neuron model”, Chaos 32, 113104 (2022) https://doi.org/10.1063/5.0101667
 
 
@@ -31,7 +31,7 @@ The first is `paper_data` which holds all the previous published data (2022 pape
 
 The second is `paper_figures` which conatins all figures generated `generate_graphics.py` (see Figure Generation section).
 
-All other files are for generation of the figures or analysis of the simulations. The vast majority of code within the scripts are commented. Questions can be directed to the corresponding author.
+All other files are for generation of the figures or analysis of the simulations. The code is largely commented however if questions arise please direct these to the corresponding author.
 
 </blockquote>
 </details>

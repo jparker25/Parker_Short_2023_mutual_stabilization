@@ -6,6 +6,7 @@ from matplotlib import pyplot as plt
 from mpl_toolkits import mplot3d
 import argparse
 
+# import user modules
 from helpers import *
 import mutual_stabilization as ms
 import loop_mutual_stabilization as loop
@@ -185,6 +186,7 @@ bins = args.b
 dt = args.dt
 plot_percent = args.pp
 
+# Loop to generate all provided figures from -f flag.
 for fig in args.f:
     if fig == 3:
         generate_figure_3(data_direc, plot_percent, save_direc)
@@ -235,5 +237,5 @@ for fig in args.f:
             neurons=4,
         )
 
-
+# Generate PDF figure from EPS.
 epstopdf(args.f, save_direc)

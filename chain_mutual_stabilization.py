@@ -1,10 +1,13 @@
+# Run chain mutual stabilization scenario.
+# Author: John E. Parker
+
+# Import Python modules
 import numpy as np
 from matplotlib import pyplot as plt
 import pickle
 import bisect
-from scipy.signal import find_peaks
-import sys
 
+# import user modules
 import rk4
 import control_planes as gc
 import keep_data as kd
@@ -14,6 +17,11 @@ from helpers import *
 
 
 def integrateAndFire(vs, subbits, threshold):
+    """
+    Reads in a visitation sequence VS, integer subbits, and integer thrshold.
+    Performs integrateAndFire function on the visitation sequence where
+    if the subbits sum to the threshold a 1 is returned otherwise a 0 is returned.
+    """
     if sum(vs) >= threshold:
         return 1
     else:
@@ -21,6 +29,9 @@ def integrateAndFire(vs, subbits, threshold):
 
 
 def unidirectional_chain(direc, dt, tf, neurons, control1, ifm, ifn):
+    """
+    Simulates unidirectional chain of number of neurons specified by neurons.
+    """
     bin_rn_direc = f"{direc}/bins_1600_rN_16/"
     neuron = pickle.load(open(f"{direc}/neuron.obj", "rb"))
 
@@ -252,6 +263,9 @@ def unidirectional_chain(direc, dt, tf, neurons, control1, ifm, ifn):
 
 
 def plot_chain_mutual_stabilization(sol, neurons, save_direc):
+    """
+    Plots the chain mutual stabilization result.
+    """
     N = int(sol.shape[0] / (2 * (neurons + 1)))
     fig, axs = plt.subplots(
         neurons + 1,
@@ -297,50 +311,10 @@ def plot_chain_mutual_stabilization(sol, neurons, save_direc):
     run_cmd(f"open {save_direc}/neural_states_3d.eps")
 
 
-def plot_raster(sol, neurons, save_direc, dt):
-    N = int(sol.shape[0] / (2 * neurons + 2))
-    _, index_period, _ = sa.get_period(sol[N : 2 * N, 1], dt)
-    fig, axs = plt.subplots(neurons + 1, 1, figsize=(8, 10), tight_layout=True, dpi=300)
-    for i in range(neurons + 1):
-        ed = int((2 * i + 2) * N)
-        st = ed - int(N / 3)
-        t = sol[st:ed, 0]
-        pks1, _ = find_peaks(sol[st:ed, 1], height=1)
-        pks2, _ = find_peaks(sol[st:ed, 4], height=1)
-        pks3, _ = find_peaks(sol[st:ed, 7], height=1)
-        pks4, _ = find_peaks(sol[st:ed, 10], height=1)
-        axs[i].eventplot(
-            [t[pks4], t[pks3], t[pks2], t[pks1]], linewidth=1, color="blue"
-        )
-        axs[i].set_yticks(list(range(neurons)))
-        axs[i].set_yticklabels(["Neuron 4", "Neuron 3", "Neuron 2", "Neuron 1"])
-    plt.savefig(f"{save_direc}/raster.eps")
-    plt.close()
-    run_cmd(f"open {save_direc}/raster.eps")
-
-
-def plot_x_series(sol, neurons, save_direc, dt):
-    N = int(sol.shape[0] / (2 * neurons + 2))
-    _, index_period, _ = sa.get_period(sol[N : 2 * N, 1], dt)
-    fig, axs = plt.subplots(neurons + 1, 1, figsize=(8, 10), tight_layout=True, dpi=300)
-    for i in range(neurons + 1):
-        ed = int((2 * i + 2) * N)
-        st = ed - int(N / 3)
-        t = sol[st:ed, 0]
-        pks1, _ = find_peaks(sol[st:ed, 1], height=1)
-        pks2, _ = find_peaks(sol[st:ed, 4], height=1)
-        pks3, _ = find_peaks(sol[st:ed, 7], height=1)
-        pks4, _ = find_peaks(sol[st:ed, 10], height=1)
-        # axs[i].eventplot([t[pks4],t[pks3],t[pks2],t[pks1]],linewidth=1,color="blue")
-        axs[i].plot(sol[st:ed, [1, 4, 7, 10]])
-        axs[i].set_yticks(list(range(neurons)))
-        axs[i].set_yticklabels(["Neuron 4", "Neuron 3", "Neuron 2", "Neuron 1"])
-    plt.savefig(f"{save_direc}/xtime_series.eps")
-    plt.close()
-    run_cmd(f"open {save_direc}/xtime_series.eps")
-
-
 def save_data(sol, vs, vsms, control, neurons, save_direc):
+    """
+    Saves data to save_direc.
+    """
     np.savetxt(f"{save_direc}/sol.txt", sol, delimiter="\t", newline="\n")
     for i in range(1, neurons + 1):
         np.savetxt(
@@ -373,8 +347,10 @@ def generate_figure_6(
     ifn=3,
     neurons=4,
 ):
+    """
+    Simulates and plots Figure 6, chain mutual stabilization scenario.
+    """
     np.random.seed(24)
-    # direc = "/Users/johnparker/paper_repos/Parker_Short_2023_mutual_stabilization/paper_data/"
     save_direc = f"{save_direc}/chain_stabilization"
 
     kd.check_direc(save_direc)
@@ -390,4 +366,5 @@ def generate_figure_6(
 
     sol = np.loadtxt(f"{save_direc}/sol.txt")
     plot_chain_mutual_stabilization(sol, neurons, save_direc)
-    run_cmd(f"cp {save_direc}/mutual_stabilization_3d.eps paper_figures/figure_6.eps")
+
+    run_cmd(f"cp {save_direc}/neural_states_3d.eps paper_figures/figure_6.eps")

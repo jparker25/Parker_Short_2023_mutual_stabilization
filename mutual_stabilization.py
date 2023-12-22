@@ -1,20 +1,26 @@
+# Script to generate mutual stabilization between two HR neurons.
+# Author: John Parker
+
+# Import Python modules
 import numpy as np
 from matplotlib import pyplot as plt
 import pickle
 import bisect
-from scipy.signal import find_peaks
-import seaborn as sns
-import sys
 
+# import user modules
 import rk4
 import control_planes as gc
 import keep_data as kd
 import cupolet_search as cupg
-import signal_analysis as sa
 from helpers import *
 
 
 def integrateAndFire(vs, subbits, threshold):
+    """
+    Reads in a visitation sequence VS, integer subbits, and integer thrshold.
+    Performs integrateAndFire function on the visitation sequence where
+    if the subbits sum to the threshold a 1 is returned otherwise a 0 is returned.
+    """
     if sum(vs) >= threshold:
         return 1
     else:
@@ -22,6 +28,9 @@ def integrateAndFire(vs, subbits, threshold):
 
 
 def mutual_stabilization(direc, dt, t0, tf, control1, control2, ifm, ifn):
+    """
+    Performs mutual stabilization between two neurons.
+    """
     bin_rn_direc = f"{direc}/bins_1600_rN_16/"
     neuron = pickle.load(open(f"{direc}/neuron.obj", "rb"))
     N = int(tf / dt)
@@ -218,6 +227,9 @@ def mutual_stabilization(direc, dt, t0, tf, control1, control2, ifm, ifn):
 
 
 def plot_mutual_stabilization(sol, save_direc):
+    """
+    Plots mutual stabilization result.
+    """
     N = int(sol.shape[0] / 4)
     fig, axs = plt.subplots(
         2,
@@ -300,6 +312,9 @@ def generate_figure_4(
     ifm=5,
     ifn=3,
 ):
+    """
+    Simulates and plots mutual stabilization result.
+    """
     np.random.seed(24)
     save_direc = f"{save_direc}/c1_{cupg.ctrl_to_string(control1)}_c2_{cupg.ctrl_to_string(control2)}_q_{ifm}_k_{ifn}_none"
     kd.check_direc(save_direc)
