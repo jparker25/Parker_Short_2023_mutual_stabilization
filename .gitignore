@@ -13,7 +13,7 @@ paper_data/bins_1600_rN_16/cupolets/*
 paper_data/bins_1600_rN_16/cupolets_plots/
 paper_data/bins_1600_rN_16/unique_cupolets/
 
-paper_figures/
+paper_figures/*eps
 test.py
 
 # Byte-compiled / optimized / DLL files
